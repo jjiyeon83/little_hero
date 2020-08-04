@@ -1,34 +1,21 @@
-from django_filters import rest_framework as fils
-from rest_framework import generics
+from django_filters import FilterSet, NumberFilter, CharFilter, BooleanFilter
 from .models import Post
 
-class PostDetailFilter(fils.FilterSet) :
-    registNo = fils.NumberFilter(field_name='regist_no')
-    siteDomain = fils.NumberFilter(field_name='site_domain')
+class SearchFilter(Filterset):
+    registNo = NumberFilter(name='registNo')
+    siteDomain = NumberFilter(name='siteDomain')
 
     class Meta :
         model = Post
         fields = ['registNo', 'siteDomain']
 
+class ViewFilter(Filterset):
+    title = CharFilter(name='title')
+    addressCity = CharFilter(name='address_city')
+    addressGu = CharFilter(name='address_gu')
+    recruitStatus = BooleanFilter(name='recruit_status')
+    adultStatus = BooleanFilter(name='adult_status')
 
-class PostFilter(fils.FilterSet) :
-    addressCity = fils.CharFilter(field_name='address_city')
-    addressGu = fils.CharFilter(field_name='address_gu')
-    recruitStatus = fils.BooleanFilter(field_name='recruit_status')
-    adultStatus = fils.BooleanFilter(field_name='adult_status')
-
-    startDate = fils.DateFilter(field_name='start_date', lookup_expr=('gte')) #greater or equal
-    endDate = fils.DateFilter(field_name='end_date', lookup_expr=('lte')) #less of equal
-    
-    
     class Meta :
         model = Post
-        fields = [
-            'addressCity',
-            'addressGu',
-            'recruitStatus',
-            'adultStatus',
-            'startDate',
-            'endDate',
-        ]
-    
+        fields = ['title', 'addressCity', 'addressGu', 'recruitStatus', 'adultstatus']
