@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
+from announcement.models import Dropdown
 from announcement.views import *
+from cities.views import *
+from cities.models import Cities, CitiesTable
 from django.conf.urls import url, include
 from rest_framework_swagger.views import get_swagger_view
 
@@ -24,12 +27,18 @@ from django.urls import re_path
 from . import views
 
 router = routers.DefaultRouter()
-
+admin.site.register(Dropdown)
+admin.site.register(Cities)
+admin.site.register(CitiesTable)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/doc', get_swagger_view(title='Rest API Document')),
-    url(r'^api/posts', PostView.as_view()),
+    url(r'^api/posts/dropdown', DropDownView.as_view()),
+    url(r'^api/posts/all', PostView.as_view()),
     url(r'^api/posts/detail', PostViewDetail.as_view()),
+    url(r'^api/posts/likes', views.post_like, name='post_like'),
+    url(r'^api/cities/list', CitiesView.as_view()),
+    url(r'^api/cities/detail', CitiesTableView.as_view()),
     re_path(r'^$', views.index, name='index'),
 ]
