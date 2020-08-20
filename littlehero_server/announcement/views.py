@@ -37,9 +37,10 @@ class PostView(generics.ListAPIView) :
 
 
 # update likes
-def post_like(request, pk):
-    pk = request.POST.get('pk', None)
-    post = get_object_or_404(Post, pk=pk)
+def post_like(request):
+    registNo = request.POST.get('regist_no', None)
+    siteDomain = request.POST.get('site_domain', None)
+    post = get_object_or_404(Post, regist_no=registNo, site_domain=siteDomain)
     user = request.user
 
     if post.likes_post.filter(id=user.id).exists() :
