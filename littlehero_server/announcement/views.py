@@ -47,7 +47,7 @@ def post_like(request):
         post.likes_post.remove(user)
         message = '좋아요 취소'
     else :
-        post.likes_post.add(user)
+        video.likes_post.add(user)
         message = '좋아요'
 
     context = {'likes_count' : post.count_liked_user(), 'message' : message}
