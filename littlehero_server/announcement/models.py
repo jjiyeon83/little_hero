@@ -23,6 +23,7 @@ class Post(models.Model):
     recruit_company = models.CharField(default='', max_length=300)
     recruit_member = models.CharField(default='0 명 / 일', max_length=200)
     likes_post = models.ManyToManyField('Post', blank = True, related_name = 'likes_user')
+    like_count = models.IntegerField(default=0)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -30,9 +31,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-    def count_liked_user(self) :
-        return self.likes_post.count()
 
 
 class Dropdown(models.Model):
