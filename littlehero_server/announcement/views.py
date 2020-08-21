@@ -53,8 +53,7 @@ def post_like(request):
         post.like_count += 1
         message = '좋아요'
 
-    context = {'likes_count' : post.count_liked_user(), 'message' : message}
-    return HttpResponse(json.dumps(context), context_type = "application/json")
+    return redirect('like:post_detail', regist_no, site_domain)
 
 
 
