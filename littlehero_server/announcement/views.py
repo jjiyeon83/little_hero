@@ -42,12 +42,15 @@ def post_like(request):
     siteDomain = request.POST.get('site_domain', None)
     post = get_object_or_404(Post, regist_no=registNo, site_domain=siteDomain)
     user = request.user
+    
 
     if post.likes_post.filter(id=user.id).exists() :
         post.likes_post.remove(user)
+        post.like_count -= 1
         message = '좋아요 취소'
     else :
-        video.likes_post.add(user)
+        post.likes_post.add(user)
+        post.like_count += 1
         message = '좋아요'
 
     context = {'likes_count' : post.count_liked_user(), 'message' : message}
