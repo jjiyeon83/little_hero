@@ -33,6 +33,7 @@ class Post(models.Model):
         return self.title
 
 
+
 class Dropdown(models.Model):
     kinds = models.CharField(default='', max_length=10)
     li = models.CharField(default='', max_length=5)

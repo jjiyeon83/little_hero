@@ -37,13 +37,18 @@ class PostView(generics.ListAPIView) :
 
 
 # update likes
-def post_like(request):
+class LikeView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = LikeCreateSerializer
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
+    filter_class = PostDetailFilter
+        
+def post_like(request) :
     registNo = request.POST.get('regist_no', None)
     siteDomain = request.POST.get('site_domain', None)
     post = get_object_or_404(Post, regist_no=registNo, site_domain=siteDomain)
     user = request.user
-    
-
+        
     if post.likes_post.filter(id=user.id).exists() :
         post.likes_post.remove(user)
         post.like_count -= 1
@@ -53,10 +58,10 @@ def post_like(request):
         post.like_count += 1
         message = '좋아요'
 
-    return redirect('like:post_detail', regist_no, site_domain)
-
-
-
+    referer_url = request.META.get('HTTP_REFERER')
+    path = urlparse(referer_rul).path
+    return HttpResponseRedirect(path)
+    
 # get dropdown
 class DropDownView(generics.ListAPIView):
     queryset = Dropdown.objects.all()

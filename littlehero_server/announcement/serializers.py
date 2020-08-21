@@ -1,13 +1,13 @@
 from rest_framework import serializers, generics
-from .models import Post
+from .models import Post, Dropdown
 
-class SerachSerializer(serializers.ModelSerializer):
+class PostDetailSerializer(serializers.ModelSerializer):
     class Meta :
         model = Post
         fields = '__all__'
 
 
-class ViewSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta :
         model = Post
         fields = (
@@ -22,3 +22,19 @@ class ViewSerializer(serializers.ModelSerializer):
             'end_date',
             'domain',
         )
+
+class LikeCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = (
+            'regist_no',
+            'site_domain',
+            'likes_post',
+            'like_count',
+        )
+
+
+class DropDownSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dropdown
+        fields = ['li']
